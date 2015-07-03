@@ -1,7 +1,7 @@
 package nyc.c4q.syd.updateme;
 
 /**
- * Created by July on 6/25/15.
+ * Created by Yuliya Kaleda on 6/25/15.
  */
 public class JobPosition {
     public String title;

@@ -1,11 +1,9 @@
 package nyc.c4q.syd.updateme;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by July on 6/26/15.
+ * Created by Yuliya Kaleda on 6/26/15.
  */
 public class JobCard extends Card {
     private List<JobPosition> jobArray;

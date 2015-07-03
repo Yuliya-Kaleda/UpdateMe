@@ -6,16 +6,17 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Created by Yuliya Kaleda on 6/25/15.
+ */
 
 public class MainActivity extends Activity implements JobSearchAsync.MyListener {
 

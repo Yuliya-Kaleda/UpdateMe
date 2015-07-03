@@ -42,7 +42,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
@@ -58,7 +57,7 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by July on 6/26/15.
+ * Created by Yuliya Kaleda on 6/26/15.
  */
 public class MainAdapter extends RecyclerView.Adapter {
     private List<Card> cardsArray;

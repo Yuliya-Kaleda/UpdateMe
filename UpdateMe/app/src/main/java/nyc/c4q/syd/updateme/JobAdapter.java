@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Created by July on 6/26/15.
+ * Created by Yuliya Kaleda on 6/26/15.
  */
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
     private final Activity mActivity;

@@ -8,7 +8,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
 
 /**
- * Created by sufeizhao on 6/30/15.
+ * Created by Yuliya Kaleda on 6/30/15.
  */
 public class FlipAnimation extends Animation {
     private Camera camera;

@@ -1,7 +1,5 @@
 package nyc.c4q.syd.updateme;
 
-import java.util.List;
-
 /**
  * Created by fattyduck on 6/27/15.
  */

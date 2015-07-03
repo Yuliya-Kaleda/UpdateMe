@@ -2,11 +2,9 @@ package nyc.c4q.syd.updateme;
 
 import android.content.Context;
 import android.os.AsyncTask;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,7 +16,7 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * Created by July on 6/26/15.
+ * Created by Yuliya Kaleda on 6/26/15.
  */
 public class JobSearchAsync extends AsyncTask<String, Void, ArrayList<JobPosition>> {
 

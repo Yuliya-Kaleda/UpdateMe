@@ -1,16 +1,14 @@
 package nyc.c4q.syd.updateme;
-
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.w3c.dom.Text;
+/**
+ * Created by Yuliya Kaleda on 6/25/15.
+ */
+
 
 public class JobActivity extends FragmentActivity{
 
