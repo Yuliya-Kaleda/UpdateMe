@@ -1,52 +1,58 @@
 package nyc.c4q.syd.updateme;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * Created by Yuliya Kaleda on 6/25/15.
+ * Created by July on 7/18/15.
  */
-
-
-public class JobActivity extends FragmentActivity{
-
-
+public class JobFragment extends Fragment {
     //eliminate the possibility of toast to appear twice on both sides of the card when there is no job match
     public static int showToast = 3;
 
     private boolean showingBack;
-    private FrontFragment front;
-    private BackFragment back;
+    private Fragment front;
+    private Fragment back;
     private Handler handler;
     private FlipAnimation flipAnimation;
     private FlipAnimation backFlip;
     private TextView header;
+    private View view;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.job_activity, container, false);
+        header = (TextView) view.findViewById(R.id.header);
+        return view;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.job_activity);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         //create handler for animation control
-        handler = new Handler(getMainLooper());
+        handler = new Handler(getActivity().getMainLooper());
 
         //create two fragments
-        Fragment front = new FrontFragment();
-        Fragment back = new BackFragment();
-        getFragmentManager().beginTransaction().add(R.id.fragment_container, back, "fragmentRight").commit();
-        getFragmentManager().beginTransaction().add(R.id.fragment_container, front, "fragmentLeft").commit();
+        front = new FrontFragment();
+        back = new BackFragment();
+        getChildFragmentManager().beginTransaction().add(R.id.fragment_container, back, "fragmentRight").commit();
+        getChildFragmentManager().beginTransaction().add(R.id.fragment_container, front, "fragmentLeft").commit();
 
-        header = (TextView) findViewById(R.id.header);
 
-        findViewById(R.id.settings).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.settings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                BackFragment right = (BackFragment) getFragmentManager().findFragmentByTag("fragmentRight");
-                FrontFragment left = (FrontFragment) getFragmentManager().findFragmentByTag("fragmentLeft");
+                BackFragment right = (BackFragment) getChildFragmentManager().findFragmentByTag("fragmentRight");
+                FrontFragment left = (FrontFragment) getChildFragmentManager().findFragmentByTag("fragmentLeft");
 
                 //get user input from the settings section
                 String userInput = right.getPosition() + "&location=" + right.getLocation();
@@ -90,5 +96,4 @@ public class JobActivity extends FragmentActivity{
             header.setText("Modify Search");
         }
     }
-
 }
