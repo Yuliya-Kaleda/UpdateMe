@@ -80,7 +80,6 @@ public class CardsListFragment extends Fragment implements JobSearchAsync.MyList
         }
         StockCard stockCard = new StockCard();
 
-
         //create a list of different card types
         ArrayList<Card> cards = new ArrayList<Card>();
 
@@ -90,7 +89,7 @@ public class CardsListFragment extends Fragment implements JobSearchAsync.MyList
 
         cards.add(todoCard);
         cards.add(jobCard);
-        //cards.add(mapCard);
+       // cards.add(mapCard);
         cards.add(stockCard);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());

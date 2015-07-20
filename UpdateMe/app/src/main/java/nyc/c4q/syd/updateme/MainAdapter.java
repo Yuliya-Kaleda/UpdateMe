@@ -3,7 +3,6 @@ package nyc.c4q.syd.updateme;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -45,7 +44,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -247,8 +245,8 @@ public class MainAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     if (jobs!=null && jobs.size()>0 && !CardsListFragment.notConnected) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(0).getLink()));
-                    context.startActivity(browserIntent);
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(0).getLink()));
+                        context.startActivity(browserIntent);
                     }
                 }
             });
@@ -260,8 +258,8 @@ public class MainAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     if (jobs!=null && jobs.size()>0 && !CardsListFragment.notConnected) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(1).getLink()));
-                    context.startActivity(browserIntent);
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(1).getLink()));
+                        context.startActivity(browserIntent);
                     }
                 }
             });
@@ -273,8 +271,8 @@ public class MainAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     if (jobs!=null && jobs.size()>0 && !CardsListFragment.notConnected) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(2).getLink()));
-                    context.startActivity(browserIntent);
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(2).getLink()));
+                        context.startActivity(browserIntent);
                     }
                 }
             });
@@ -288,6 +286,7 @@ public class MainAdapter extends RecyclerView.Adapter {
 
                 }
             });
+
         }
     }
 
@@ -328,7 +327,6 @@ public class MainAdapter extends RecyclerView.Adapter {
             MapFragment mapFragment = (MapFragment) ((Activity) context).getFragmentManager().findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
             map = mapFragment.getMap();
-
             loadState();
 
             ImageButton settings = (ImageButton) v.findViewById(R.id.change_destination);
@@ -612,7 +610,7 @@ public class MainAdapter extends RecyclerView.Adapter {
 
         };
     }
-    
+
     //get type of card
     @Override
     public int getItemViewType(int position) {
@@ -711,5 +709,4 @@ public class MainAdapter extends RecyclerView.Adapter {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
-
 }

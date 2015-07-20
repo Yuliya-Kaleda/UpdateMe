@@ -34,8 +34,8 @@ public class JobActivity extends FragmentActivity{
         handler = new Handler(getMainLooper());
 
         //create two fragments
-        Fragment front = new FrontFragment();
-        Fragment back = new BackFragment();
+        front = new FrontFragment();
+        back = new BackFragment();
         getFragmentManager().beginTransaction().add(R.id.fragment_container, back, "fragmentRight").commit();
         getFragmentManager().beginTransaction().add(R.id.fragment_container, front, "fragmentLeft").commit();
 
