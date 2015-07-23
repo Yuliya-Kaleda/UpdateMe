@@ -130,11 +130,11 @@ public class MainAdapter extends RecyclerView.Adapter {
                                 String itemText = todoET.getText().toString();
                                 items.add(itemText);
                                 setListViewHeightBasedOnChildren(lvItems);
+                                writeItems();
                             }
                         });
                 AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
-                writeItems();
             }
         };
 
@@ -565,11 +565,11 @@ public class MainAdapter extends RecyclerView.Adapter {
                                 String itemText = todoET.getText().toString().toUpperCase();
                                 stocks.add(itemText);
                                 setListViewHeightBasedOnChildren(lvStocks);
+                                writeItems();
                             }
                         });
                 AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
-                writeItems();
             }
         };
 
