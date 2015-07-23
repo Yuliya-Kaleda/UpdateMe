@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,23 +36,21 @@ public class ToDoFragment extends Fragment {
     private ArrayList<String> items;
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
-    private AlertDialog.Builder dialogBuilder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View v =inflater.inflate(R.layout.todo_layout, container, false);
+        View v = inflater.inflate(R.layout.todo_layout, container, false);
         lvItems = (ListView) v.findViewById(R.id.list);
-        items = new ArrayList<String>();
-        readItems();
-        itemsAdapter = new ArrayAdapter<String>(getActivity(), R.layout.todo_list, R.id.text, items);
-        lvItems.setAdapter(itemsAdapter);
-       // setListViewHeightBasedOnChildren(lvItems);
+        ImageButton add = (ImageButton) v.findViewById(R.id.add);
+
+        items = readItems();
         if (items.size() == 0)
             items.add("Add your first to do list now!");
 
-        ImageButton add = (ImageButton) v.findViewById(R.id.add);
+        itemsAdapter = new ArrayAdapter<String>(getActivity(), R.layout.todo_list, R.id.text, items);
+        lvItems.setAdapter(itemsAdapter);
+        MainAdapter.setListViewHeightBasedOnChildren(lvItems);
         add.setOnClickListener(addTODOListener);
         lvItems.setOnItemClickListener(lvItemClickListener);
         lvItems.setOnItemLongClickListener(lvItemLongClickListener);
@@ -59,7 +58,7 @@ public class ToDoFragment extends Fragment {
     }
 
     // save and load items from to-do list
-    private void readItems() {
+    private ArrayList<String> readItems() {
         File filesDir = getActivity().getFilesDir();
         File todoFile = new File(filesDir, "todo.txt");
         try {
@@ -67,6 +66,7 @@ public class ToDoFragment extends Fragment {
         } catch (IOException e) {
             items = new ArrayList<String>();
         }
+        return items;
     }
 
     private void writeItems() {
@@ -83,7 +83,7 @@ public class ToDoFragment extends Fragment {
     View.OnClickListener addTODOListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            dialogBuilder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
             final EditText todoET = new EditText(getActivity());
             dialogBuilder.setTitle("Add Todo Task Item")
                     .setMessage("What is on your list today?")
@@ -93,14 +93,15 @@ public class ToDoFragment extends Fragment {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             String itemText = todoET.getText().toString();
                             items.add(itemText);
-//                            setListViewHeightBasedOnChildren(lvItems);
+                            itemsAdapter.notifyDataSetChanged();
+                            writeItems();
+                            MainAdapter.setListViewHeightBasedOnChildren(lvItems);
                         }
                     });
             AlertDialog alertDialog = dialogBuilder.create();
             alertDialog.show();
-            writeItems();
         }
-            };
+    };
 
     // option to delete item from to-do list
     AdapterView.OnItemClickListener lvItemClickListener = new AdapterView.OnItemClickListener() {
@@ -116,15 +117,14 @@ public class ToDoFragment extends Fragment {
                             items.remove(pos);
                             itemsAdapter.notifyDataSetChanged();
                             writeItems();
-//                            setListViewHeightBasedOnChildren(lvItems);
+                            MainAdapter.setListViewHeightBasedOnChildren(lvItems);
                             Toast.makeText(getActivity(), "Well done!", Toast.LENGTH_LONG).show();
                         }
                     });
             AlertDialog alertDialog = dialogBuilder.create();
             alertDialog.show();
         }
-        };
-
+    };
 
 
     AdapterView.OnItemLongClickListener lvItemLongClickListener = (new AdapterView.OnItemLongClickListener() {

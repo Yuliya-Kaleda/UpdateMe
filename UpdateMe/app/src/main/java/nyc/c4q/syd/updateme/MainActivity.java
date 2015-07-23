@@ -28,27 +28,35 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements CardsListFragment.SendClickInfo {
 
+    private ToDoFragment toDo;
+    private JobFragment jobFragment;
+    private StockFragment stockFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        toDo = new ToDoFragment();
+        jobFragment = new JobFragment();
+        stockFragment = new StockFragment();
     }
 
     @Override
     public void sendInfo(int positionClicked) {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
+
         if (positionClicked==0) {
-            ft.replace(R.id.details_fragment, new ToDoFragment()).addToBackStack(null).commit();
+            ft.replace(R.id.details_fragment, toDo).addToBackStack(null).commit();
         }
         else if (positionClicked==1) {
-            ft.replace(R.id.details_fragment,new JobFragment()).addToBackStack(null).commit();
+            ft.replace(R.id.details_fragment,jobFragment).addToBackStack(null).commit();
         }
-//        else if (positionClicked==2) {
-//            ft.replace(R.id.details_fragment, new MyMapFragment()).addToBackStack(null).commit();
-//        }
+        else if (positionClicked==2) {
+            ft.replace(R.id.details_fragment, new MapFragment()).addToBackStack(null).commit();
+        }
         else{
-            ft.replace(R.id.details_fragment, new StockFragment()).addToBackStack(null).commit();
+            ft.replace(R.id.details_fragment, stockFragment).addToBackStack(null).commit();
         }
     }
 }

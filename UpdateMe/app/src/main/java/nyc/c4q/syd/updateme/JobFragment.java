@@ -1,6 +1,7 @@
 package nyc.c4q.syd.updateme;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;

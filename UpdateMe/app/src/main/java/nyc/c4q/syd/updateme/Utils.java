@@ -16,7 +16,6 @@ public class Utils {
         if (width<px){
             return false;
         }
-
         return true;
     }
 }

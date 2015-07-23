@@ -51,15 +51,6 @@ public class CardsListFragment extends Fragment implements JobSearchAsync.MyList
         //set a progress bar for jobs loading
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-
-        return view;
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
         //create a jobList container for data which will get returned from jobAsync
         jobList = new ArrayList<JobPosition>();
         stockList = new ArrayList<StockInfo>();
@@ -89,7 +80,7 @@ public class CardsListFragment extends Fragment implements JobSearchAsync.MyList
 
         cards.add(todoCard);
         cards.add(jobCard);
-       // cards.add(mapCard);
+        cards.add(mapCard);
         cards.add(stockCard);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -99,14 +90,16 @@ public class CardsListFragment extends Fragment implements JobSearchAsync.MyList
 
         if (Utils.isTablet(getActivity())) {
             recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        sendClickInfo.sendInfo(position);
-                    }
-                })
+                    new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            sendClickInfo.sendInfo(position);
+                        }
+                    })
             );
         }
+
+        return view;
     }
 
     public interface SendClickInfo{
