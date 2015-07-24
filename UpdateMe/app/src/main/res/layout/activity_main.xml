@@ -3,10 +3,19 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment
-        android:name="nyc.c4q.syd.updateme.CardsListFragment"
-        android:id="@+id/list_fragment"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Base.Widget.AppCompat.ProgressBar"
+        android:indeterminate="true"
+        android:layout_centerInParent="true"
+        android:id="@+id/progress"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="178dp"/>
 
 </RelativeLayout>

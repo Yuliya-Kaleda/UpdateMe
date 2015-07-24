@@ -37,7 +37,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
         }
     }
 
-
     @Override
     public JobAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view

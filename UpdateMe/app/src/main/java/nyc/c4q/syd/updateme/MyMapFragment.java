@@ -33,10 +33,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
+
 /**
  * Created by July on 7/19/15.
  */
-public class MyMapFragment extends MapFragment implements OnMapReadyCallback,
+public class MyMapFragment extends Fragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private GoogleApiClient client;
     private static final String PREFS_NAME = "Settings";
@@ -53,14 +54,11 @@ public class MyMapFragment extends MapFragment implements OnMapReadyCallback,
     private LocationRequest mLocationRequest;
     private DirectionsFetcher df;
     private TextView info;
-    private ImageButton settings;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.map_layout2, container, false);
-        info = (TextView) v.findViewById(R.id.map_info);
-        settings = (ImageButton) v.findViewById(R.id.change_destination);
+        setRetainInstance(true);
+        View v = inflater.inflate(R.layout.map_layout, container, false);
         preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         editor = preferences.edit();
         info = (TextView) v.findViewById(R.id.map_info);
@@ -73,7 +71,7 @@ public class MyMapFragment extends MapFragment implements OnMapReadyCallback,
                 .setFastestInterval(1000); // 1 second, in milliseconds
 
         // Create MapFragment based on map xml
-        MapFragment mapFragment = (MapFragment) ((Activity) getActivity()).getFragmentManager().findFragmentById(R.id.map);
+        MapFragment mapFragment = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         map = mapFragment.getMap();
         loadState();
@@ -83,6 +81,14 @@ public class MyMapFragment extends MapFragment implements OnMapReadyCallback,
         return v;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        MapFragment f = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        if (f != null)
+            getFragmentManager().beginTransaction().remove(f).commit();
+    }
 
     @Override
     public void onMapReady(final GoogleMap map) {
@@ -115,7 +121,7 @@ public class MyMapFragment extends MapFragment implements OnMapReadyCallback,
     public void onConnectionFailed(ConnectionResult connectionResult) {
         if (connectionResult.hasResolution()) {
             try {
-                connectionResult.startResolutionForResult(((Activity) getActivity()), CONNECTION_FAILURE_RESOLUTION_REQUEST);
+                connectionResult.startResolutionForResult(getActivity(), CONNECTION_FAILURE_RESOLUTION_REQUEST);
             } catch (IntentSender.SendIntentException e) {
                 e.printStackTrace();
             }
@@ -236,6 +242,7 @@ public class MyMapFragment extends MapFragment implements OnMapReadyCallback,
                             if (items[which].equalsIgnoreCase("Directions to")) {
                                 destination = markerLatLng.latitude + "," + markerLatLng.longitude;
                                 df = new DirectionsFetcher(info, map, origin, destination, mode);
+                                //df.setOnMapLoadFinishedListener(MyMapFragment.this);
                                 df.execute();
                             } else if (items[which].equalsIgnoreCase("Save as Home")) {
                                 editor.putString(HOME, markerLatLng.latitude + "," + markerLatLng.longitude);

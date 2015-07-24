@@ -12,11 +12,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +56,7 @@ public class StockFragment extends Fragment{
         readItems();
         stockAdapter = new ArrayAdapter<String>(getActivity(), R.layout.stock_textview, stocks);
         lvStocks.setAdapter(stockAdapter);
-        //setListViewHeightBasedOnChildren(lvStocks);
+        setListViewHeightBasedOnChildren(lvStocks);
         if (stocks.size() == 0)
             stocks.add("MSFT");
 
@@ -101,12 +103,12 @@ public class StockFragment extends Fragment{
                         public void onClick(DialogInterface dialogInterface, int i) {
                             String itemText = todoET.getText().toString().toUpperCase();
                             stocks.add(itemText);
-                            //setListViewHeightBasedOnChildren(lvStocks);
+                            setListViewHeightBasedOnChildren(lvStocks);
+                            writeItems();
                         }
                     });
             AlertDialog alertDialog = dialogBuilder.create();
             alertDialog.show();
-            writeItems();
         }
     };
 
@@ -145,4 +147,27 @@ public class StockFragment extends Fragment{
             return true;
         }
     };
+
+    // adjust listview height for to-to list
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = listView.getPaddingTop() + listView.getPaddingBottom();
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            if (listItem instanceof ViewGroup) {
+                listItem.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.WRAP_CONTENT));
+            }
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
 }

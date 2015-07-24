@@ -3,10 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <FrameLayout
+        android:id="@+id/job_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="You did it!!!"
-        android:textSize="40dp"/>
+        android:layout_height="match_parent">
+    </FrameLayout>
 
 </LinearLayout>

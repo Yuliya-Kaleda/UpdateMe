@@ -169,7 +169,5 @@ public class StockInfoActivity extends Activity {
             }
             return tagValueToRetrun;
         }
-
     }
-
 }

@@ -45,13 +45,13 @@ public class FrontFragment extends Fragment implements JobSearchAsync.MyListener
         fetchData("java");
     }
 
-    //method to populate recycler viw when async task finishes JSON parsing
+    //method to populate recycler view when async task finishes JSON parsing
     @Override
     public void onLoadComplete(List<JobPosition> jobs) {
         if (getView() == null || isDetached()) return;
         progressBar.setVisibility(View.INVISIBLE);
 
-        if (jobs.size()==0 && JobActivity.showToast%2!=0 && !CardsListFragment.notConnected) {
+        if (jobs.size()==0 && JobActivity.showToast%2!=0 && !MainActivity.notConnected) {
             showCustomToast();
         }
         mAdapter = new JobAdapter(jobs, getActivity());

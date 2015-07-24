@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Created by sufeizhao on 6/27/15.
  */
-public class DirectionsFetcher extends AsyncTask<URL, GoogleMap, Void> {
+public class DirectionsFetcher extends AsyncTask<URL, GoogleMap, MapData> {
 
     private static final String API_KEY = "&key=AIzaSyDTaAeiCfVCXJhdweubPkgIvsni3s1-9ss";
     private List<LatLng> latLngs = new ArrayList<>();
@@ -58,9 +58,10 @@ public class DirectionsFetcher extends AsyncTask<URL, GoogleMap, Void> {
         map.clear();
     }
 
-    protected Void doInBackground(URL... urls) {
+    protected MapData doInBackground(URL... urls) {
+        MapData mapData = null;
         String input = readURL();
-        Log.d("Map", "Parsing JSON");
+        Log.d("Map", "Parsing JSON returned from readURL: " + input);
 
         try {
             // read polyline points
@@ -79,16 +80,18 @@ public class DirectionsFetcher extends AsyncTask<URL, GoogleMap, Void> {
             JSONObject duration = list2.getJSONObject("duration");
             time = duration.getString("text");
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            mapData = new MapData(latLngs, time, miles);
+
+        } catch (Exception e) {
+            Log.e("yuliya", "Experienced an error reading in map data.", e);
         }
-        return null;
+        return mapData;
     }
 
-    protected void onPostExecute(Void result) {
-        Log.d("Map", "Adding polyline");
+    protected void onPostExecute(MapData mapData) {
+        Log.d("Map", "in Async on postEx Adding polyline");
         addPolylineToMap(latLngs);
-        Log.d("Map", "Fix Zoom");
+        Log.d("Map", "in Async on postEx Fix Zoom");
         fixZoomForLatLngs(map, latLngs);
         info.setText("It will take " + time + " to get to your destination. Total distance: " + miles);
     }
@@ -103,7 +106,7 @@ public class DirectionsFetcher extends AsyncTask<URL, GoogleMap, Void> {
 
         map.addPolyline(options);
 
-        // add marker at destionation
+        // add marker at destination
         try {
             LatLng dest = latLngs.get(latLngs.size() - 1);
             map.addMarker(new MarkerOptions().position(dest));
@@ -126,6 +129,7 @@ public class DirectionsFetcher extends AsyncTask<URL, GoogleMap, Void> {
     public String readURL() {
         url = url + origin + destination + mode + API_KEY;
 
+        Log.d("yuliya", "Retrieving Google API data from url: " + url);
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(url);
@@ -148,3 +152,7 @@ public class DirectionsFetcher extends AsyncTask<URL, GoogleMap, Void> {
         return builder.toString();
     }
 }
+
+
+
+

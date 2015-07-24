@@ -3,7 +3,6 @@ package nyc.c4q.syd.updateme;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -43,6 +42,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
@@ -58,7 +58,7 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by Yuliya Kaleda on 6/26/15.
+ * Created by July on 6/26/15.
  */
 public class MainAdapter extends RecyclerView.Adapter {
     private List<Card> cardsArray;
@@ -131,11 +131,11 @@ public class MainAdapter extends RecyclerView.Adapter {
                                 String itemText = todoET.getText().toString();
                                 items.add(itemText);
                                 setListViewHeightBasedOnChildren(lvItems);
+                                writeItems();
                             }
                         });
                 AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
-                writeItems();
             }
         };
 
@@ -245,7 +245,7 @@ public class MainAdapter extends RecyclerView.Adapter {
             cardView1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (jobs!=null && jobs.size()>0 && !CardsListFragment.notConnected) {
+                    if (jobs!=null && jobs.size()>0 && !MainActivity.notConnected) {
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(0).getLink()));
                         context.startActivity(browserIntent);
                     }
@@ -258,7 +258,7 @@ public class MainAdapter extends RecyclerView.Adapter {
             cardView2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (jobs!=null && jobs.size()>0 && !CardsListFragment.notConnected) {
+                    if (jobs!=null && jobs.size()>0 && !MainActivity.notConnected) {
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(1).getLink()));
                         context.startActivity(browserIntent);
                     }
@@ -271,7 +271,7 @@ public class MainAdapter extends RecyclerView.Adapter {
             cardView3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (jobs!=null && jobs.size()>0 && !CardsListFragment.notConnected) {
+                    if (jobs!=null && jobs.size()>0 && !MainActivity.notConnected) {
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(2).getLink()));
                         context.startActivity(browserIntent);
                     }
@@ -566,11 +566,11 @@ public class MainAdapter extends RecyclerView.Adapter {
                                 String itemText = todoET.getText().toString().toUpperCase();
                                 stocks.add(itemText);
                                 setListViewHeightBasedOnChildren(lvStocks);
+                                writeItems();
                             }
                         });
                 AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
-                writeItems();
             }
         };
 
@@ -679,7 +679,6 @@ public class MainAdapter extends RecyclerView.Adapter {
         if (holder.getItemViewType() == 3) {
             StockCard stockCard = (StockCard) cardsArray.get(position);
             StockViewHolder stockViewHolder = (StockViewHolder) holder;
-
         }
     }
 
