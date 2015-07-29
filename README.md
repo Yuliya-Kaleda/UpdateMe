@@ -2,10 +2,12 @@
 Google Now app by Team Syd
 
 ### Cards to Implement
-* Yuliya - Job Opening Search Card
+* Yuliya - Job Search Card
 * Sufei - Maps Card
 * Dison - Stock Market Card
 
+#NB
+The app is in the refactoring stage. The tablet version of the app is ready. The version for phone screen sizes is being refactored using Fragments and ScrollView instead of RecyclerView to delete big classes like Main Adapter, make code more readable and make its classes less dependent on each other.
 
 ---
 
