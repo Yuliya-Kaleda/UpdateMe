@@ -1,6 +1,8 @@
 package nyc.c4q.syd.updateme;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -8,6 +10,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -29,20 +32,22 @@ public class MainActivity extends Activity implements JobSearchAsync.MyListener 
     private ProgressBar progressBar;
     public ArrayList<StockInfo> stockList;
     private  SharedPreferences sp;
+    private FragmentManager fm;
+    private ToDoFragment toDoFragment;
+    private JobFragment jobFragment;
+    private MyMapFragment mapFragment;
+    private StockFragment stockFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //set a progress bar for jobs loading
-        progressBar = (ProgressBar) findViewById(R.id.progress);
         //create a jobList container for data which will get returned from jobAsync
         jobList = new ArrayList<JobPosition>();
         stockList = new ArrayList<StockInfo>();
 
-
-        if (!isNetworkConnected()) {
+        if (!noNetwork()) {
             notConnected = false;
             //start jobs JSON parsing and fetching the data for the default java positions
             JobSearchAsync jobSearchAsync = new JobSearchAsync(this);
@@ -51,17 +56,20 @@ public class MainActivity extends Activity implements JobSearchAsync.MyListener 
         }
 
         else {
-            //if there is no connected the jobs card gets populated with previously saved data
+            //if there is no connection the jobs card gets populated with previously saved data
             notConnected = true;
             Toast.makeText(this, "Sorry, there is no Internet connection", Toast.LENGTH_LONG).show();
             getDataFromSharedPref();
         }
-        StockCard stockCard = new StockCard();
 
+        fm = getFragmentManager();
+
+        //set a progress bar for jobs loading
+        progressBar = (ProgressBar) findViewById(R.id.progress);
 
         //create a list of different card types
         ArrayList<Card> cards = new ArrayList<Card>();
-
+        StockCard stockCard = new StockCard();
         jobCard = new JobCard(jobList);
         ToDoCard todoCard = new ToDoCard("Items");
         MapCard mapCard = new MapCard("Map");
@@ -71,11 +79,22 @@ public class MainActivity extends Activity implements JobSearchAsync.MyListener 
         cards.add(mapCard);
         cards.add(stockCard);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new MainAdapter(this, cards);
-        recyclerView.setAdapter(adapter);
+        //fragments for the tablet layout
+        toDoFragment = new ToDoFragment();
+        jobFragment = new JobFragment();
+        mapFragment = new MyMapFragment();
+        stockFragment = new StockFragment();
+
+        if (!Utils.isTablet(this)) {
+            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            adapter = new MainAdapter(this, cards);
+            recyclerView.setAdapter(adapter);
+        }
+        else {
+            fm.beginTransaction().replace(R.id.details_fragment, toDoFragment).addToBackStack(null).commit();
+        }
     }
 
     //method to get Data from jobAsync and update
@@ -86,12 +105,14 @@ public class MainActivity extends Activity implements JobSearchAsync.MyListener 
         //setter in JobCard to update List
         jobCard.setJobArray(jobs);
         //very important! when all the Recycler View is set up, it is not populated bc jobAsync didn't finish parsing and returning data
-        adapter.notifyDataSetChanged();
-        progressBar.setVisibility(View.INVISIBLE);
+        if (!Utils.isTablet(this)) {
+            adapter.notifyDataSetChanged();
+            progressBar.setVisibility(View.INVISIBLE);
+        }
     }
 
     //method to check Internet connection
-    private boolean isNetworkConnected() {
+    private boolean noNetwork() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if (ni == null) {
@@ -125,6 +146,22 @@ public class MainActivity extends Activity implements JobSearchAsync.MyListener 
         editor.putString("company3", jobs.get(2).getCompany());
 
         editor.commit();
+    }
+
+    public void addToDoFragment(View v) {
+        fm.beginTransaction().replace(R.id.details_fragment, toDoFragment).addToBackStack(null).commit();
+    }
+
+    public void addJobFragment(View v) {
+        fm.beginTransaction().replace(R.id.details_fragment, jobFragment).addToBackStack(null).commit();
+    }
+
+    public void addMapFragment(View v) {
+       fm.beginTransaction().replace(R.id.details_fragment, mapFragment).addToBackStack(null).commit();
+    }
+
+    public void addStockFragment(View v) {
+        fm.beginTransaction().replace(R.id.details_fragment, stockFragment).addToBackStack(null).commit();
     }
 }
 

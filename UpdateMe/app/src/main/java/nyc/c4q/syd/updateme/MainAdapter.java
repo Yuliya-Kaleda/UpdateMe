@@ -42,6 +42,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
@@ -57,7 +58,7 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by Yuliya Kaleda on 6/26/15.
+ * Created by July on 6/26/15.
  */
 public class MainAdapter extends RecyclerView.Adapter {
     private List<Card> cardsArray;
@@ -245,8 +246,8 @@ public class MainAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     if (jobs!=null && jobs.size()>0 && !MainActivity.notConnected) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(0).getLink()));
-                    context.startActivity(browserIntent);
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(0).getLink()));
+                        context.startActivity(browserIntent);
                     }
                 }
             });
@@ -258,8 +259,8 @@ public class MainAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     if (jobs!=null && jobs.size()>0 && !MainActivity.notConnected) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(1).getLink()));
-                    context.startActivity(browserIntent);
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(1).getLink()));
+                        context.startActivity(browserIntent);
                     }
                 }
             });
@@ -271,8 +272,8 @@ public class MainAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     if (jobs!=null && jobs.size()>0 && !MainActivity.notConnected) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(2).getLink()));
-                    context.startActivity(browserIntent);
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(jobs.get(2).getLink()));
+                        context.startActivity(browserIntent);
                     }
                 }
             });
@@ -610,7 +611,7 @@ public class MainAdapter extends RecyclerView.Adapter {
 
         };
     }
-    
+
     //get type of card
     @Override
     public int getItemViewType(int position) {
@@ -678,7 +679,6 @@ public class MainAdapter extends RecyclerView.Adapter {
         if (holder.getItemViewType() == 3) {
             StockCard stockCard = (StockCard) cardsArray.get(position);
             StockViewHolder stockViewHolder = (StockViewHolder) holder;
-
         }
     }
 
@@ -709,5 +709,4 @@ public class MainAdapter extends RecyclerView.Adapter {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
-
 }

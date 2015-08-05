@@ -5,13 +5,11 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
 
-/**
+/*
  * Created by Yuliya Kaleda on 6/25/15.
  */
 
-
 public class JobActivity extends FragmentActivity{
-
 
     //eliminate the possibility of toast to appear twice on both sides of the card when there is no job match
     public static int showToast = 3;
@@ -35,8 +33,8 @@ public class JobActivity extends FragmentActivity{
         //create two fragments
         front = new FrontFragment();
         back = new BackFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, back, "fragmentRight").commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, front, "fragmentLeft").commit();
+        getFragmentManager().beginTransaction().add(R.id.fragment_container, back, "fragmentRight").commit();
+        getFragmentManager().beginTransaction().add(R.id.fragment_container, front, "fragmentLeft").commit();
 
         header = (TextView) findViewById(R.id.header);
 
@@ -44,20 +42,20 @@ public class JobActivity extends FragmentActivity{
             @Override
             public void onClick(View v) {
 
-                BackFragment right = (BackFragment) getSupportFragmentManager().findFragmentByTag("fragmentRight");
-                FrontFragment left = (FrontFragment) getSupportFragmentManager().findFragmentByTag("fragmentLeft");
+            BackFragment right = (BackFragment) getFragmentManager().findFragmentByTag("fragmentRight");
+            FrontFragment left = (FrontFragment) getFragmentManager().findFragmentByTag("fragmentLeft");
 
-                //get user input from the settings section
-                String userInput = right.getPosition() + "&location=" + right.getLocation();
-                left.fetchData(userInput);
-                changeHeaderText();
-                //show toast only on one side of the card
-                showToast+=1;
+            //get user input from the settings section
+            String userInput = right.getPosition() + "&location=" + right.getLocation();
+            left.fetchData(userInput);
+            changeHeaderText();
+            //show toast only on one side of the card
+            showToast+=1;
 
-                flipAnimation = new FlipAnimation(left.getView(), right.getView());
-                backFlip = new FlipAnimation(left.getView(), right.getView());
-                handler.removeCallbacks(rotate);
-                handler.postDelayed(rotate, 260);
+            flipAnimation = new FlipAnimation(left.getView(), right.getView());
+            backFlip = new FlipAnimation(left.getView(), right.getView());
+            handler.removeCallbacks(rotate);
+            handler.postDelayed(rotate, 260);
             }
 
         });
@@ -89,5 +87,4 @@ public class JobActivity extends FragmentActivity{
             header.setText("Modify Search");
         }
     }
-
 }

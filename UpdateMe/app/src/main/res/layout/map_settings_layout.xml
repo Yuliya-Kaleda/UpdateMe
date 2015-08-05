@@ -31,7 +31,7 @@
                 style="@style/title"
                 android:layout_margin="8dp"
                 android:padding="8dp"
-                android:background="#388E3C"/>
+                android:background="#4CAF50"/>
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                     android:layout_gravity="fill_horizontal"
                     android:layout_marginTop="20dp"
                     android:text="Home"
-                    android:textColor="#388E3C"
+                    android:textColor="#4CAF50"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -67,7 +67,7 @@
                     android:layout_gravity="fill_horizontal"
                     android:layout_marginTop="20dp"
                     android:text="Work"
-                    android:textColor="#388E3C"
+                    android:textColor="#4CAF50"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 

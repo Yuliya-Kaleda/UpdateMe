@@ -3,7 +3,7 @@ package nyc.c4q.syd.updateme;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -45,7 +45,7 @@ public class FrontFragment extends Fragment implements JobSearchAsync.MyListener
         fetchData("java");
     }
 
-    //method to populate recycler viw when async task finishes JSON parsing
+    //method to populate recycler view when async task finishes JSON parsing
     @Override
     public void onLoadComplete(List<JobPosition> jobs) {
         if (getView() == null || isDetached()) return;
